@@ -1,0 +1,143 @@
+---
+title: "LO3"
+output: html_notebook
+---
+
+
+# LIBRARY AND DATA
+## LOADING AND INSTALLATION
+```{r}
+#Installation
+#install.packages("tidyverse")
+#install.packages("gapminder")
+```
+
+```{r}
+#loading 
+library(tidyverse)
+library(gapminder)
+```
+
+## STORE DATA
+```{r}
+gm_data <- gapminder
+```
+
+# OVERVIEW
+## STRUCTURE
+
+```{r}
+str(gm_data)
+```
+
+```{r}
+summary(gm_data)
+```
+
+# Selektieren von Jahr 2007, 1977, 1952
+```{r}
+gapminder_1952_2007 <- gm_data %>% filter(year %in% c(1952, 1977, 2007))
+```
+
+# 
+```{r}
+by_year <- gm_data %>%
+  group_by(year,continent) %>%
+  summarize(mean_gdpPercap = mean(gdpPercap),
+            max_gdpPercap = max(gdpPercap),
+            median_gdpPercap = median(gdpPercap),
+            min_gdpPercap = min(gdpPercap))
+
+ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
+  geom_point() + 
+  scale_color_manual(values = c("orange", "blue", "green", "black", "red")) +
+  labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente") 
+
+ggplot(by_year, aes(x = year, y = median_gdpPercap, color = continent)) + 
+  geom_point() + 
+  scale_color_manual(values = c("orange", "blue", "green", "black", "red")) +
+  labs(title = "Median BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente")
+
+ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  scale_color_manual(values = c("orange", "blue", "green", "black", "red")) +
+  labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente") 
+
+ggplot(by_year, aes(x = year, y = median_gdpPercap, color = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  scale_color_manual(values = c("orange", "blue", "green", "black", "red")) +
+  labs(title = "Median BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente")
+```
+
+# Farbenfreundliche Farben: "#d73027", "#fc8d59", "#fee090", "#91bfdb", "#4575b4"
+```{r}
+byafrica <- by_year %>% filter(continent == "Africa")
+
+ggplot(byafrica, aes(x = year, y = mean_gdpPercap)) + 
+  geom_point() + 
+  geom_line() + 
+  geom_area(alpha = 0.2, fill = "red") + 
+  ylim(0, 30000) + 
+  labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "Afrika",
+       caption = "12 Observationen")
+
+ggplot(byafrica, aes(x = year, y = mean_gdpPercap)) + 
+  geom_point() + 
+  geom_line() + 
+  geom_area(alpha = 0.2, fill = "red") + 
+  labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "Afrika",
+       caption = "12 Observationen")
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
