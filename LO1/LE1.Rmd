@@ -1,0 +1,209 @@
+---
+title: "GDV_LO1"
+output: html_notebook
+
+---
+
+# LIBRARY AND DATA
+## LOADING AND INSTALLATION
+```{r}
+#Installation
+#install.packages("tidyverse")
+#install.packages("gapminder")
+```
+
+```{r}
+#loading 
+library(tidyverse)
+library(gapminder)
+```
+
+## STORE DATA
+```{r}
+gm_data <- gapminder
+```
+
+# OVERVIEW
+## STRUCTURE
+
+```{r}
+str(gm_data)
+```
+
+```{r}
+summary(gm_data)
+```
+
+#PREPARATION
+
+```{r}
+group_year_line <- gapminder %>% 
+  group_by(year, continent) %>% 
+  summarize(meanPop = mean(pop))
+
+group_year_line2 <- gapminder %>% 
+  group_by(year) %>% 
+  summarize(meanPop = mean(pop))
+
+group_year_hist <- gapminder %>% 
+  select(year, gdpPercap, continent) %>% 
+  filter(year == 1997)
+
+gm_2007 <- gm_data %>% filter(year == 2007)
+gm_1997 <- gm_data %>% filter(year == 1997)
+```
+
+
+# LINE CHART
+
+## Graph 1
+
+```{r}
+ggplot(group_year_line, aes(x = year,y = meanPop, color = continent))+
+  geom_line()+
+  geom_point()+
+  labs(title = "Population per continent over time",
+       x = "Year",
+       y = "Continental population trends over time",
+       )+
+  scale_y_continuous(labels = scales::comma)
+
+```
+
+##Graph 2
+
+```{r}
+ggplot(group_year_line2, aes(x = year,y = meanPop))+
+  geom_line()+
+  geom_point()+
+  labs(title = "Population  over time",
+       x = "Year",
+       y = "Population trends over time",
+       )+
+  scale_y_continuous(labels = scales::comma)
+```
+
+# HISTOGRAM
+
+##Graph 3
+
+```{r}
+ggplot(group_year_hist, aes(x = gdpPercap))+
+  geom_histogram(bins = 5, fill = "green", color = "black")+
+  labs(title = "GDP per capita in 1997",
+       x = "GDP per capita",
+       y = "Count of observations",
+       )
+  
+```
+
+##Graph 4
+
+```{r}
+ggplot(group_year_hist, aes(x = gdpPercap))+
+  geom_histogram(bins = 10, fill = "green", color = "black")+
+  labs(title = "GDP per capita in 1997",
+       x = "GDP per capita",
+       y = "Count of observations",
+       )
+```
+
+##Graph 5
+
+```{r}
+ggplot(group_year_hist, aes(x = gdpPercap, fill = continent))+
+  geom_histogram(bins = 20, alpha = 0.5, position = "identity")+
+  labs(title = "GDP per capita in 1997",
+       x = "GDP per capita",
+       y = "Count of observations")
+
+```
+
+##Graph 6
+
+```{r}
+ggplot(group_year_hist, aes(x = gdpPercap, fill = continent))+
+  geom_histogram(bins = 20, alpha = 0.5, position = "dodge")+
+  labs(title = "GDP per capita in 1997",
+       x = "GDP per capita",
+       y = "Count of observations")
+```
+
+##Graph 7
+
+```{r}
+ggplot(group_year_hist, aes(x = gdpPercap, fill = continent))+
+  geom_histogram(bins = 20, alpha = 0.5, position = "stack")+
+  labs(title = "GDP per capita in 1997",
+       x = "GDP per capita",
+       y = "Count of observations")
+```
+
+# SCATTER PLOT
+##Graph 8
+```{r}
+ggplot(gm_1997, aes(x = gdpPercap, y = lifeExp))+
+  geom_point()+
+  labs(title= "Life expectancy depending on GDP 1997",
+       x = "GDP",
+       y = "Life expectancy",
+       )
+```
+
+##Graph 9
+```{r}
+ggplot(gm_1997, aes(x = gdpPercap, y = lifeExp, color = continent))+
+  geom_point()+
+  labs(title= "Life expectancy depending on GDP 1997",
+       x = "GDP",
+       y = "Life expectancy",
+       color = "Continent"
+       )
+```
+
+#Graph 10
+```{r}
+ggplot(gm_1997, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop))+
+  geom_point()+
+  labs(title= "Life expectancy depending on GDP 1997",
+       x = "GDP",
+       y = "Life expectancy",
+       color = "Continent"
+       )+
+    scale_size_continuous(labels = scales::comma)
+```
+
+# BOX PLOT
+##Graph 11
+```{r}
+ggplot(gm_data, aes(x = pop, y = continent)) +
+  geom_boxplot()+
+  labs(title= "Boxplot GDP per continent",
+       x = "Population",
+       y = "Continent",
+       )+
+    scale_x_continuous(labels = scales::comma)
+```
+
+##Graph 12
+```{r}
+ggplot(gm_data, aes(x = pop, y = continent, color = continent)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(width = 0.2)+
+  theme(legend.position = "none")+
+  labs(title= "Boxplot GDP per continent without outliers",
+       x = "Population",
+       y = "Continent",
+       )+
+    scale_x_continuous(labels = scales::comma)
+```
+
+
+
+
+
+
+
+
+
+
