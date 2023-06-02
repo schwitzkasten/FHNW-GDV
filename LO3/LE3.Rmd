@@ -83,12 +83,12 @@ ggplot(by_year, aes(x = year, y = median_gdpPercap, color = continent)) +
   geom_point() + 
   geom_line() + 
   scale_color_manual(values = c("orange", "blue", "green", "black", "red")) +
-  labs(title = "Median BIP/Kopf im verlaufe der Jahre",
-       x = "Jahre",
-       y = "BIP/Kopf",
-       subtitle = "60 Observationen",
+  labs(title = "Median GDP/capita over the years",
+       x = "Years",
+       y = "GDP/capita",
+       subtitle = "60 Observations",
        caption = "Gapminder",
-       color = "Kontinente")
+       color = "Continents")
 ```
 
 # Farbenfreundliche Farben: "#d73027", "#fc8d59", "#fee090", "#91bfdb", "#4575b4"
