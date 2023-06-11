@@ -1,0 +1,64 @@
+---
+title: "LO5"
+output: html_notebook
+---
+
+
+# LIBRARY AND DATA
+## LOADING AND INSTALLATION
+```{r}
+#Installation
+#install.packages("tidyverse")
+#install.packages("gapminder")
+```
+
+```{r}
+#loading 
+library(tidyverse)
+library(gapminder)
+```
+
+## STORE DATA
+```{r}
+gm_data <- gapminder
+```
+
+# OVERVIEW
+## STRUCTURE
+
+```{r}
+str(gm_data)
+```
+
+```{r}
+gm_2007 <- gm_data %>% filter(year == 2007)
+```
+
+
+```{r}
+ggplot(gm_2007, aes(x = gdpPercap, y = lifeExp, shape = continent, color = continent))+
+  geom_point(alpha = 0.5, size = 4 )+
+  geom_jitter()+
+  labs(title= "Life expectancy depending on GDP 1997 in Africa",
+       x = "GDP",
+       y = "Life expectancy"
+       )
+```
+
+```{r}
+ggplot(gm_2007, aes(x = gdpPercap, y = lifeExp, color = continent))+
+  geom_point()+
+  labs(title= "Life expectancy depending on GDP 1997",
+       x = "GDP",
+       y = "Life expectancy",
+       color = "Continent"
+       )+
+  facet_wrap(~ continent)+
+  theme(text = element_text(size=8),
+        axis.text.x = element_text(angle=90, hjust=1))
+```
+
+
+
+
+
