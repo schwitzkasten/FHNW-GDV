@@ -34,7 +34,7 @@ str(gm_data)
 gm_2007 <- gm_data %>% filter(year == 2007)
 ```
 
-
+#CREATING 2 PLOTS FOR USABILITY TESTING
 ```{r}
 ggplot(gm_2007, aes(x = gdpPercap, y = lifeExp, shape = continent, color = continent))+
   geom_point(alpha = 0.5, size = 4 )+
